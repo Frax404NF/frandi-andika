@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { STATUS_OPTIONS, STATUS_STYLES, STATUS_ACCENT } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
 
@@ -6,6 +7,7 @@ function formatDate(isoString) {
 }
 
 export function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
+  const [isExpanded, setIsExpanded] = useState(false)
   const accentColor = STATUS_ACCENT[task.status] ?? 'bg-slate-300'
   const badgeStyle = STATUS_STYLES[task.status] ?? {}
 
@@ -40,9 +42,23 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
       </div>
 
       {task.description && (
-        <p className="text-sm text-slate-600 leading-relaxed break-words -mt-1">
-          {task.description}
-        </p>
+        <div className="-mt-1">
+          <p
+            className={`text-sm text-slate-600 leading-relaxed break-words whitespace-pre-wrap ${
+              !isExpanded ? 'line-clamp-3' : ''
+            }`}
+          >
+            {task.description}
+          </p>
+          {task.description.length > 150 && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors mt-1"
+            >
+              {isExpanded ? 'Tampilkan lebih sedikit' : 'Tampilkan lebih banyak'}
+            </button>
+          )}
+        </div>
       )}
 
       <div className="flex items-center justify-between gap-3 border-t border-slate-100 pt-2.5">
