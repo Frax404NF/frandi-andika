@@ -18,7 +18,7 @@ export function TaskForm({ onAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.title.trim()) {
-      setError('Title is required.')
+      setError('Judul tidak boleh kosong.')
       return
     }
     setSubmitting(true)

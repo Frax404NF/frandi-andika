@@ -65,7 +65,7 @@ export function useTasks() {
         const task = await api.createTask(data)
         setTasks((prev) => [task, ...prev])
         fetchStats()
-        addToast('success', 'Task added.')
+        addToast('success', 'Tugas berhasil ditambahkan.')
       } catch (err) {
         addToast('error', err.message)
       }
@@ -80,7 +80,7 @@ export function useTasks() {
         setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)))
         setEditingTask(null)
         fetchStats()
-        addToast('success', 'Task updated.')
+        addToast('success', 'Tugas berhasil diperbarui.')
       } catch (err) {
         addToast('error', err.message)
       }
@@ -90,31 +90,40 @@ export function useTasks() {
 
   const deleteTask = useCallback(
     async (id) => {
+      setTasks((prev) => {
+        const index = prev.findIndex((t) => t.id === id)
+        if (index === -1) return prev
+        const newTasks = [...prev]
+        newTasks.splice(index, 1)
+        return newTasks
+      })
+      setConfirmTarget(null)
       try {
         await api.deleteTask(id)
-        setTasks((prev) => prev.filter((t) => t.id !== id))
-        setConfirmTarget(null)
         fetchStats()
-        addToast('success', 'Task deleted.')
+        addToast('success', 'Tugas berhasil dihapus.')
       } catch (err) {
+        fetchTasks()
         addToast('error', err.message)
       }
     },
-    [fetchStats, addToast],
+    [fetchStats, fetchTasks, addToast],
   )
 
   const changeStatus = useCallback(
     async (id, status) => {
+      setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, status } : t)))
       try {
         const updated = await api.updateTask(id, { status })
         setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)))
         fetchStats()
-        addToast('success', 'Status updated.')
+        addToast('success', 'Status tugas diperbarui.')
       } catch (err) {
+        fetchTasks()
         addToast('error', err.message)
       }
     },
-    [fetchStats, addToast],
+    [fetchStats, fetchTasks, addToast],
   )
 
   return {
