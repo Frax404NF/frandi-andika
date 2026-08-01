@@ -1,0 +1,17 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment variables — NEVER commit
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# Distribution
+dist/
+build/
