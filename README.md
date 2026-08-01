@@ -1,6 +1,6 @@
 # Task Tracker — Frandi Andika
 
-A web application for managing team tasks. Built as a technical test submission.
+A fullstack web application for managing team tasks. Built as a technical test submission for PT Global Loyalty Indonesia.
 
 ## Tech Stack
 
@@ -84,11 +84,19 @@ Interactive docs (Swagger UI): **http://localhost:8000/docs**
 
 ### Frontend
 
-> **TODO: Fill in after frontend implementation**
-
+**1. Configure environment variables**
 ```bash
 cd frontend
 cp .env.example .env
+```
+
+`.env` contents:
+```
+VITE_API_URL=http://localhost:8000
+```
+
+**2. Install dependencies & start dev server**
+```bash
 npm install
 npm run dev
 ```
@@ -291,3 +299,7 @@ Returns a count of tasks grouped by status.
   "done": 3
 }
 ```
+
+---
+
+<p>&copy; 2026 Frandi Andika.</p>
