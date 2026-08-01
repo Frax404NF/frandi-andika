@@ -6,7 +6,7 @@ const TOAST_CLASSES = {
 export function Toast({ toasts, onRemove }) {
   return (
     <div
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col gap-2 z-[9999] pointer-events-none"
+      className="fixed top-4 right-4 sm:top-6 sm:right-6 flex flex-col gap-2 z-[9999] pointer-events-none"
       aria-live="polite"
       aria-atomic="false"
     >

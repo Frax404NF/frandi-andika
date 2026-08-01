@@ -1,5 +1,5 @@
 services:
-  db:
+  database:
     image: postgres:16
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-taskdb}
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-taskuser}"]
+      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB:-taskdb} -U ${POSTGRES_USER:-taskuser}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -18,9 +18,9 @@ services:
   backend:
     build: ./backend
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-taskuser}:${POSTGRES_PASSWORD:-taskpass}@db:5432/${POSTGRES_DB:-taskdb}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-taskuser}:${POSTGRES_PASSWORD:-taskpass}@database:5432/${POSTGRES_DB:-taskdb}
     depends_on:
-      db:
+      database:
         condition: service_healthy
     ports:
       - "8000:8000"
